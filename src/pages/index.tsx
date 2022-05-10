@@ -11,6 +11,8 @@ interface HomeProps {
   };
 }
 
+// Version 1.0.0
+
 export default function Home({ product }: HomeProps) {
   return (
     <>
