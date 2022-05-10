@@ -2,7 +2,7 @@ import { GetStaticProps } from "next";
 import Head from "next/head";
 import { MainPosts } from "./styles.posts";
 import Link from "next/link";
-import Prismic from "@prismicio/client";
+
 import { RichText } from "prismic-dom";
 
 import { getPrismicClient } from "../../services/prismic";
@@ -45,7 +45,7 @@ export const getStaticProps: GetStaticProps = async () => {
   const prismic = getPrismicClient();
 
   const response = await prismic.query(
-    [Prismic.predicates.at("document.type", "impulsionar")],
+    [prismic.predicates.at("document.type", "impulsionar")],
     {
       fetch: ["impulsionar.title", "impulsionar.content"],
       pageSize: 100,
