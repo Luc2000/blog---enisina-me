@@ -3,7 +3,7 @@ import Head from "next/head";
 import { MainPosts } from "./styles.posts";
 import Link from "next/link";
 
-import { RichText } from "prismic-dom";
+import { RichText } from "@prismicio/helpers";
 
 import { getPrismicClient } from "../../services/prismic";
 
