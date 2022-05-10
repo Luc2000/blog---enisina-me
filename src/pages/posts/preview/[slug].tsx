@@ -3,11 +3,11 @@ import { useSession } from "next-auth/client";
 import { useRouter } from "next/dist/client/router";
 import Head from "next/head";
 import Link from "next/link";
-import { RichText } from "@prismicio/helpers";
+import RichText from "@prismicio/helpers";
 import { useEffect } from "react";
 import { getPrismicClient } from "../../../services/prismic";
 
-import { Post as StylePost } from "../styles.post";
+import { Post as StylePost } from "../../../components/styles.post";
 
 interface PostPreviewProps {
   post: {
@@ -69,7 +69,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
   const post = {
     slug,
     title: RichText.asText(response.data.title),
-    content: RichText.asHtml(response.data.content.splice(0, 3)),
+    content: RichText.asHTML(response.data.content.splice(0, 3)),
     updatedAt: new Date(response.last_publication_date).toLocaleDateString(
       "pt-BR",
       {

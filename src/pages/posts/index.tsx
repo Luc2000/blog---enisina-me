@@ -1,11 +1,12 @@
 import { GetStaticProps } from "next";
 import Head from "next/head";
-import { MainPosts } from "./styles.posts";
-import Link from "next/link";
 
-import { RichText } from "@prismicio/helpers";
+import Link from "next/link";
+import * as Prismic from "@prismicio/client";
+import RichText from "@prismicio/helpers";
 
 import { getPrismicClient } from "../../services/prismic";
+import { MainPosts } from "../../components/styles.posts";
 
 type Post = {
   slug: string;
@@ -45,7 +46,7 @@ export const getStaticProps: GetStaticProps = async () => {
   const prismic = getPrismicClient();
 
   const response = await prismic.query(
-    [prismic.predicates.at("document.type", "impulsionar")],
+    [Prismic.predicate.at("document.type", "impulsionar")],
     {
       fetch: ["impulsionar.title", "impulsionar.content"],
       pageSize: 100,
@@ -53,9 +54,10 @@ export const getStaticProps: GetStaticProps = async () => {
   );
 
   const posts = response.results.map((post) => {
+    console.log(post.data.title[0].text);
     return {
       slug: post.uid,
-      title: RichText.asText(post.data.title),
+      title: post.data.title[0].text,
       excerpt:
         post.data.content.find((content) => content.type === "paragraph")
           ?.text ?? "",

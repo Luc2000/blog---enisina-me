@@ -1,10 +1,10 @@
 import { GetServerSideProps } from "next";
 import { getSession } from "next-auth/client";
 import Head from "next/head";
-import { RichText } from "@prismicio/helpers";
+import RichText from "@prismicio/helpers";
 import { getPrismicClient } from "../../services/prismic";
 
-import { Post as StylePost } from "./styles.post";
+import { Post as StylePost } from "../../components/styles.post";
 
 interface PostProps {
   post: {
@@ -51,14 +51,14 @@ export const getServerSideProps: GetServerSideProps = async ({
     };
   }
 
-  const prismic = getPrismicClient(req);
+  const prismic = getPrismicClient(String(req));
 
   const response = await prismic.getByUID("impulsionar", String(slug), {});
 
   const post = {
     slug,
     title: RichText.asText(response.data.title),
-    content: RichText.asHtml(response.data.content),
+    content: RichText.asHTML(response.data.content),
     updatedAt: new Date(response.last_publication_date).toLocaleDateString(
       "pt-BR",
       {
